@@ -16,7 +16,7 @@ namespace DemoForum.Controllers
             _accountService = accountService;
         }
 
-        [HttpGet(Name = "DemoTokenGeneration")]
+        /*[HttpGet(Name = "DemoTokenGeneration")]
         public async Task<ActionResult> DemoTokenGeneration()
         {
             var token = await _accountService.GenerateLoginToken("DemoUser", "demo@forum.me");
@@ -63,7 +63,7 @@ namespace DemoForum.Controllers
             //var requestUser = Request.HttpContext.User;
             //if (requestUser == null || requestUser.Claims == null) return Ok("You are not logged in");
             //return Ok(requestUser.Claims.ToList());
-        }
+        }*/
 
         [HttpPost(Name = "Login")]
         public async Task<ActionResult> Login([FromBody] LoginModel loginData)
