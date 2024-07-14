@@ -61,7 +61,7 @@ namespace DemoForum.Controllers
 
             if (tokenData.UserName != answer.UserName || tokenData.EmailAddress != answer.Email) return Unauthorized("You are not allowed to edit this answer");
 
-            await _answerService.UpdateQuestion(editAnswer);
+            await _answerService.UpdateAnswer(editAnswer);
 
             return Ok("Answer updated");
         }
