@@ -79,7 +79,7 @@ namespace DemoForum.Controllers
 
             await _answerService.UpvoteAnswer(id);
 
-            return Ok("Answer upvoted")
+            return Ok("Answer upvoted");
         }
 
         [HttpPut("DownvoteAnswer/{id:int}"), Authorize]
