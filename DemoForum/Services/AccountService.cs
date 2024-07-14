@@ -1,6 +1,7 @@
 ﻿using DemoForum.Models;
 using DemoForum.ViewModels;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
 using System.Data;
 using System.Security.Claims;
@@ -47,6 +48,23 @@ namespace DemoForum.Services
             var securityToken = handler.CreateToken(tokenDescriptor);
 
             return await Task.FromResult(securityToken);
+        }
+
+        public async Task<PreparedTokenDataModel> PrepareTokenData(StringValues auth)
+        {
+            PreparedTokenDataModel result = new()
+            {
+                TokenFound = false
+            };
+
+            if (string.IsNullOrEmpty(auth.ToString()) || string.IsNullOrEmpty(auth[0])) return await Task.FromResult(result);
+
+            string bearerToken = auth[0];
+
+            result.TokenFound = true;
+            result.Token = bearerToken.Replace("Bearer ", "");
+
+            return await Task.FromResult(result);
         }
 
         public async Task<TokenDataModel> GetTokenData(string loginToken)

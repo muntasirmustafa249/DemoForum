@@ -37,13 +37,11 @@ namespace DemoForum.Controllers
         {
             var auth = Request.Headers.Authorization;
 
-            if (!string.IsNullOrEmpty(auth.ToString()) && !string.IsNullOrEmpty(auth[0]))
+            var processedToken = await _accountService.PrepareTokenData(auth);
+
+            if (processedToken.TokenFound)
             {
-                var bearerToken = auth[0] ?? "";
-
-                string token = bearerToken.Replace("Bearer ", "");
-
-                var tokenData = await _accountService.GetTokenData(token);
+                var tokenData = await _accountService.GetTokenData(processedToken.Token);
 
                 newQuestion.Email = tokenData.EmailAddress;
                 newQuestion.UserName = tokenData.UserName;
@@ -62,11 +60,9 @@ namespace DemoForum.Controllers
         {
             var auth = Request.Headers.Authorization;
 
-            var bearerToken = auth[0] ?? "";
+            var processedToken = await _accountService.PrepareTokenData(auth);
 
-            string token = bearerToken.Replace("Bearer ", "");
-
-            var tokenData = await _accountService.GetTokenData(token);
+            var tokenData = await _accountService.GetTokenData(processedToken.Token);
 
             if (!tokenData.IsTokenValid) return ValidationProblem("Session expired");
 
@@ -84,11 +80,9 @@ namespace DemoForum.Controllers
         {
             var auth = Request.Headers.Authorization;
 
-            var bearerToken = auth[0] ?? "";
+            var processedToken = await _accountService.PrepareTokenData(auth);
 
-            string token = bearerToken.Replace("Bearer ", "");
-
-            var tokenData = await _accountService.GetTokenData(token);
+            var tokenData = await _accountService.GetTokenData(processedToken.Token);
 
             if (!tokenData.IsTokenValid) return ValidationProblem("Session expired");
 
@@ -106,11 +100,9 @@ namespace DemoForum.Controllers
         {
             var auth = Request.Headers.Authorization;
 
-            var bearerToken = auth[0] ?? "";
+            var processedToken = await _accountService.PrepareTokenData(auth);
 
-            string token = bearerToken.Replace("Bearer ", "");
-
-            var tokenData = await _accountService.GetTokenData(token);
+            var tokenData = await _accountService.GetTokenData(processedToken.Token);
 
             if (!tokenData.IsTokenValid) return ValidationProblem("Session expired");
 
