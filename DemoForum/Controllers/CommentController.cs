@@ -26,17 +26,10 @@ namespace DemoForum.Controllers
 
             var processedToken = await _accountService.PrepareTokenData(auth);
 
-            if (processedToken.TokenFound)
-            {
-                var tokenData = await _accountService.GetTokenData(processedToken.Token);
+            var tokenData = await _accountService.GetTokenData(processedToken.Token);
 
-                newComment.Email = tokenData.EmailAddress;
-                newComment.UserName = tokenData.UserName;
-            }
-            else
-            {
-                if (string.IsNullOrEmpty(newComment.Email) || string.IsNullOrEmpty(newComment.UserName)) return ValidationProblem("You must provide your username and email address");
-            }
+            newComment.Email = tokenData.EmailAddress;
+            newComment.UserName = tokenData.UserName;
 
             await _commentService.InsertComment(newComment);
             return Created();
